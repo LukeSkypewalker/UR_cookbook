@@ -1,8 +1,3 @@
-import networkx as nx
-import matplotlib.pyplot as plt
-import urx
-import numpy as np
-
 top_left = (0.1385712124925622, 0.011636543397915838, 0.04154186729581166, 1.6418626722172847, 0.09084535686200002, 0.09638235412602147)
 top_right = (-0.08335407357610965, 0.002380275817666963, 0.04098004351565569, 1.5785973273478597, 0.0619146060894506, 0.04607632817790494)
 middle_left = (0.13224846396039025, 0.12662553455733527, 0.04246070617888544, 1.6690120889031714, 0.03927775501125644, 0.04311094155117962)
@@ -14,46 +9,3 @@ side_top = (0.10513635590522341, 0.010425492915599043, 0.061232147357939415, 1.2
 side_bottom_mid = (0.09034984206608578, 0.002978369660784703, -0.06242151328692695, 1.2794475247155692, -1.1572609875282505, -1.140752256157648)
 side_front_bottom_transition = (0.14832936517922996, 0.1324069539329083, -0.008314803132204078, 1.5152549302098637, -0.38448962259284947, -0.3941700894480176)
 side_bottom_corner = (0.0727507484453784, 0.15678392808978373, -0.034084718592373664, 1.2952482154542435, -1.1371045191059936, -1.1378825796039966)
-
-
-def dist(A,B):
-    vector = np.subtract(A[:3], B[:3])
-    return np.linalg.norm(vector)
-
-
-def add_edge(graph, e1, e2):
-    graph.add_edge(e1, e2, weight=dist(e1, e2))
-
-
-rob = urx.Robot("10.0.0.2", use_rt=True)
-G = nx.Graph()
-
-add_edge(G, side_bottom_mid, side_top)
-add_edge(G, side_top, top_left)
-add_edge(G, top_left, top_right)
-add_edge(G, top_left, middle_left)
-add_edge(G, top_left, middle_right)
-add_edge(G, top_right, middle_left)
-add_edge(G, top_right, middle_right)
-add_edge(G, middle_left, bottom_left)
-add_edge(G, middle_left, bottom_mid)
-add_edge(G, middle_left, bottom_right)
-add_edge(G, middle_right, bottom_left)
-add_edge(G, middle_right, bottom_mid)
-add_edge(G, middle_right, bottom_right)
-add_edge(G, bottom_left, bottom_mid)
-add_edge(G, bottom_mid, bottom_right)
-add_edge(G, bottom_left, bottom_right)
-add_edge(G, side_front_bottom_transition, side_bottom_mid)
-add_edge(G, side_front_bottom_transition, bottom_left)
-add_edge(G, side_front_bottom_transition, side_bottom_corner)
-add_edge(G, side_bottom_mid, side_bottom_corner)
-
-
-path = nx.dijkstra_path(G, side_bottom_corner, bottom_right)
-print(path)
-
-# rob.movels(path, acc=0.1, vel=0.1, radius=0.01 )
-
-nx.draw(G, with_labels=True)
-plt.show()
