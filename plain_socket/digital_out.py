@@ -6,7 +6,9 @@ PORT = 30002  # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
-s.send(("set_digital_out(0,True)\n").encode())
+cmd = "set_digital_out(0,True)\n"
+
+s.send(cmd.encode())
 
 data = s.recv(1024)
 s.close()

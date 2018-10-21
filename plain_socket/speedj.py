@@ -7,6 +7,7 @@ PORT = 30002  # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
-s.send(("speedj([0, 0, 0, 0, 0, 10], a=5.0, t=10)" + "\n").encode())
 
+
+s.send(cmd.encode())
 s.close()
