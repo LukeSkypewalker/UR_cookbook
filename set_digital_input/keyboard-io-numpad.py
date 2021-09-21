@@ -14,17 +14,16 @@ def set_digital_inputs(states):
         set_digital_in(s, i, states[i])
 
 
-def draw_dashboard():
-    for i, item in enumerate(states):
-        pygame.draw.circle(screen, (100, 100, 100), (int(size/2), int(i*size+size/2)), size/2, int(size*0.1))
-
-
 def draw_states(states):
     for i, state in enumerate(states):
         color = (0, 0, 0)
         if state:
             color = (0, 200, 0)
-        pygame.draw.circle(screen, color, (size/2, i*size+size/2), size*0.4)
+        pygame.draw.circle(screen, color, (size, i*size*2+size), size*0.9)
+
+        font = pygame.font.SysFont('arial', int(size*1.5))
+        text = font.render(str(i+1), True, (255, 255, 255))
+        screen.blit(text, (int(size*0.6), i*size*2+int(size*0.3)))
 
 
 states = [False, False, False, False, False, False, False, False]
@@ -37,12 +36,12 @@ s.connect((HOST, PORT))
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, 0)
 pygame.init()
-size=20
-screen = pygame.display.set_mode((size,size*len(states)))
-draw_dashboard()
+size=12
+width=size*2
+height=size*2*len(states)
+screen = pygame.display.set_mode((width, height))
+
 running = True
-
-
 while running:
 
     for i in pygame.event.get():
