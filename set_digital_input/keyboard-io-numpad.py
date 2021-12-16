@@ -22,12 +22,16 @@ def draw_states(states):
         pygame.draw.circle(screen, color, (size, i*size*2+size), size*0.9)
 
         font = pygame.font.SysFont('arial', int(size*1.5))
-        text = font.render(str(i+1), True, (255, 255, 255))
+        text = font.render(str(i), True, (255, 255, 255))
         screen.blit(text, (int(size*0.6), i*size*2+int(size*0.3)))
 
 
-states = [False, False, False, False, False, False, False, False]
-keys = [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8]
+keys = [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
+        pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
+states = []
+for key in keys:
+    states.append(False)
+
 
 HOST = "127.0.0.1"  # The remote host
 PORT = 30003  # The same port as used by the server
