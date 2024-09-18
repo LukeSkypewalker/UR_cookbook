@@ -8,16 +8,9 @@ def set_digital_in(socket, port, value):
     socket.send(cmd.encode())
     socket.recv(1024)
 
-
-def set_digital_inputs(states):
-    for i, item in enumerate(states):
-        set_digital_in(s, i, states[i])
-
-
-def draw_states(states):
-    for i, state in enumerate(states):
+def draw_states(i):
         color = (0, 0, 0)
-        if state:
+        if states[i]:
             color = (0, 200, 0)
         pygame.draw.circle(screen, color, (size, i * size * 2 + size), size * 0.9)
 
@@ -29,11 +22,14 @@ def draw_states(states):
 keys = [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
         pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
 states = []
+
 for key in keys:
     states.append(False)
 
+
+
 HOST = "127.0.0.1"  # The remote host
-PORT = 30003  # The same port as used by the server
+PORT = 30003
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
@@ -43,6 +39,9 @@ size = 12
 width = size * 2
 height = size * 2 * len(states)
 screen = pygame.display.set_mode((width, height))
+
+for i, state in enumerate(states):
+    draw_states(i)
 
 running = True
 while running:
@@ -55,7 +54,7 @@ while running:
             for n, key in enumerate(keys):
                 if event.key == key:
                     states[n] = not states[n]
+                    set_digital_in(s, n, states[n])
+                    draw_states(n)
 
-    set_digital_inputs(states)
-    draw_states(states)
     pygame.display.flip()
